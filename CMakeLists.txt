@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(origami_bot)
 
-FIND_LIBRARY(WIRINGPI_LIBRARY wiringPi /home/aristoteles/wiringPi)
+FIND_LIBRARY(WIRINGPI_LIBRARY wiringPi /home/ubuntu/488_ws/src/libraries/wiringPi)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
