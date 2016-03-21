@@ -25,12 +25,12 @@ OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
 
   nh_ = nh;
 
-  current_twist.linear.x = 0;
-  current_twist.linear.y = 0;
-  current_twist.linear.z = 0;
-  current_twist.angular.x = 0;
-  current_twist.angular.y = 0;
-  current_twist.angular.z = 0;
+  currentTwist.linear.x = 0;
+  currentTwist.linear.y = 0;
+  currentTwist.linear.z = 0;
+  currentTwist.angular.x = 0;
+  currentTwist.angular.y = 0;
+  currentTwist.angular.z = 0;
 }
 
 OrigamiBot::~OrigamiBot()
@@ -40,8 +40,8 @@ OrigamiBot::~OrigamiBot()
 // Maybe unneccessary helper function.  Schedule for deletion.
 bool OrigamiBot::compareTwists(geometry_msgs::Twist &t1, geometry_msgs::Twist &t2)
 {
-  if (t1->linear->x == t2->linear->x && t1->linear->y == t2->linear->y && t1->linear->z == t2->linear->z &&
-     t1->angular->x == t2->angular->x && t1->angular->y == t2->angular->y && t1->angular->z == t2->angular->z)
+  if (t1.linear.x == t2.linear.x && t1.linear.y == t2.linear.y && t1.linear.z == t2.linear.z &&
+     t1.angular.x == t2.angular.x && t1.angular.y == t2.angular.y && t1.angular.z == t2.angular.z)
   {
     return true;
   }
@@ -54,8 +54,8 @@ void OrigamiBot::twistCB(const geometry_msgs::Twist& twist)
   // if (!compareTwists(*currentTwist, twist))
   //   currentTwist = twist;  // Make sure this gets copied and is not some weird pointer thing.
   // else
-  double x    = twist->linear->x;
-  double phi  = twist->angular->z;
+  double x    = twist.linear.x;
+  double phi  = twist.angular.z;
 
   float cmd_left = x;
   float cmd_right = x;
@@ -69,12 +69,13 @@ void OrigamiBot::twistCB(const geometry_msgs::Twist& twist)
   {
     softPwmWrite(L_FWD, 100 * cmd_left);
     softPwmWrite(R_FWD, 100 * cmd_right);
-    std::cout << "FWD | L: " << cmd_left
+    std::cout << "FWD | L: " << cmd_left << " R: " << cmd_right << std::endl;
   }
   else if (x < 0)  // Reverse motors
   {
     softPwmWrite(L_REV, 100 * cmd_left);
     softPwmWrite(R_REV, 100 * cmd_right);
+    std::cout << "REV | L: " << cmd_left << " R: " << cmd_right << std::endl;
   }
   else  // Stop!
   {
@@ -89,6 +90,6 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "origami_main");
   ros::NodeHandle nh;
 
-  OrigamiBot bot(&nh);
+  OrigamiBot bot(nh);
   ros::spin();
 }
