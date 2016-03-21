@@ -22,10 +22,10 @@ public:
   OrigamiBot(ros::NodeHandle &nh);
   virtual ~OrigamiBot();
 
-  const int M1_FWD = 1;
-  const int M1_REV = 2;
-  const int M2_FWD = 3;
-  const int M2_REV = 4;
+  const int L_FWD = 1;
+  const int L_REV = 2;
+  const int R_FWD = 3;
+  const int R_REV = 4;
 
 private:
   ros::NodeHandle nh_;

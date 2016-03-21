@@ -11,20 +11,17 @@
 #include <math.h>
 
 ros::Subscriber g_TwistListener;
-int M1_FWD = 1;
-int M1_REV = 2;
-int M2_FWD = 3;
-int M2_REV = 4;
+
 
 OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
 {
   wiringPiSetup();
 
-  softPwmCreate(1, 0, 100);  // M1 FWD Channel
-  softPwmCreate(2, 0, 100);  // M1 REV Channel
+  softPwmCreate(L_FWD, 0, 100);  // M1 FWD Channel
+  softPwmCreate(L_REV, 0, 100);  // M1 REV Channel
 
-  softPwmCreate(3, 0, 100);  // M2 FWD Channel
-  softPwmCreate(4, 0, 100);  // M2 REV Channel
+  softPwmCreate(R_FWD, 0, 100);  // M2 FWD Channel
+  softPwmCreate(R_REV, 0, 100);  // M2 REV Channel
 
   nh_ = nh;
 
@@ -57,13 +54,41 @@ void OrigamiBot::twistCB(const geometry_msgs::Twist& twist)
   // if (!compareTwists(*currentTwist, twist))
   //   currentTwist = twist;  // Make sure this gets copied and is not some weird pointer thing.
   // else
+  double x    = twist->linear->x;
+  double phi  = twist->angular->z;
 
+  float cmd_left = x;
+  float cmd_right = x;
 
+  if (phi > 0)
+    cmd_right *= phi;
+  else if (phi < 0)
+    cmd_left *= (-1*phi);
+
+  if (x > 0)  // Forward motors
+  {
+    softPwmWrite(L_FWD, 100 * cmd_left);
+    softPwmWrite(R_FWD, 100 * cmd_right);
+    std::cout << "FWD | L: " << cmd_left
+  }
+  else if (x < 0)  // Reverse motors
+  {
+    softPwmWrite(L_REV, 100 * cmd_left);
+    softPwmWrite(R_REV, 100 * cmd_right);
+  }
+  else  // Stop!
+  {
+    softPwmWrite(L_REV, 0);
+    softPwmWrite(R_REV, 0);
+  }
 }
 
 
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "origami_main");
-  ros::NodeHandle n;
+  ros::NodeHandle nh;
+
+  OrigamiBot bot(&nh);
+  ros::spin();
 }
