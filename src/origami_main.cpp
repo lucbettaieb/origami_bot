@@ -31,6 +31,8 @@ OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
   currentTwist.angular.x = 0;
   currentTwist.angular.y = 0;
   currentTwist.angular.z = 0;
+
+  g_TwistListener = nh_.subscribe("/cmd_vel", 3, &OrigamiBot::twistCB, this);
 }
 
 OrigamiBot::~OrigamiBot()
