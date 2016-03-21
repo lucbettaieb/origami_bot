@@ -11,15 +11,16 @@ find_package(catkin REQUIRED COMPONENTS
 # find_package(Boost REQUIRED COMPONENTS system)
 
 catkin_package(
-#  INCLUDE_DIRS include
+  INCLUDE_DIRS include
 #  LIBRARIES origami_bot
 #  CATKIN_DEPENDS roscpp
 #  DEPENDS system_lib
 )
 
-
 include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
+  ${PROJECT_NAME}/include
 )
 
 ## Declare a C++ library
