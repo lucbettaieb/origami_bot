@@ -69,8 +69,8 @@ void OrigamiBot::twistCB(const geometry_msgs::Twist& twist)
 
   if (x > 0)  // Forward motors
   {
-    //softPwmWrite(L_REV, 0);
-    //softPwmWrite(R_REV, 0);
+    softPwmWrite(L_REV, 0);
+    softPwmWrite(R_REV, 0);
 
     softPwmWrite(L_FWD, 100 * cmd_left);
     softPwmWrite(R_FWD, 100 * cmd_right);
@@ -78,20 +78,20 @@ void OrigamiBot::twistCB(const geometry_msgs::Twist& twist)
   }
   else if (x < 0)  // Reverse motors
   {
-    //softPwmWrite(L_FWD, 0);
-    //softPwmWrite(R_FWD, 0);
+    softPwmWrite(L_FWD, 0);
+    softPwmWrite(R_FWD, 0);
 
     softPwmWrite(L_REV, 100 * cmd_left);
     softPwmWrite(R_REV, 100 * cmd_right);
     std::cout << "REV | L: " << cmd_left << " R: " << cmd_right << std::endl;
   }
-  // else if (x == 0)  // Stop!
-  // {
-  //   softPwmWrite(L_FWD, 0);
-  //   softPwmWrite(R_FWD, 0);
-  //   softPwmWrite(L_REV, 0);
-  //   softPwmWrite(R_REV, 0);
-  // }
+  else if (x == 0)  // Stop!
+  {
+    softPwmWrite(L_FWD, 0);
+    softPwmWrite(R_FWD, 0);
+    softPwmWrite(L_REV, 0);
+    softPwmWrite(R_REV, 0);
+  }
 }
 
 
