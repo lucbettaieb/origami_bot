@@ -76,7 +76,7 @@ void OrigamiBot::twistCB(const geometry_msgs::Twist& twist)
     softPwmWrite(R_FWD, 100 * cmd_right);
     std::cout << "FWD | L: " << cmd_left << " R: " << cmd_right << std::endl;
   }
-  if (x < 0)  // Reverse motors
+  else if (x < 0)  // Reverse motors
   {
     softPwmWrite(L_FWD, 0);
     softPwmWrite(R_FWD, 0);
