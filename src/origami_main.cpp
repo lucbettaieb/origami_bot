@@ -11,7 +11,14 @@
 #include <math.h>
 
 ros::Subscriber g_TwistListener;
+ros::Publisher g_LWheelPublisher;
+ros::Publisher g_RWheelPublisher;
 
+int prev_l_enc_a = 0;
+int prev_l_enc_b = 1;
+
+int prev_r_enc_a = 0;
+int prev_r_enc_b = 1;
 
 OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
 {
@@ -23,6 +30,11 @@ OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
   softPwmCreate(R_FWD, 0, 100);  // M2 FWD Channel
   softPwmCreate(R_REV, 0, 100);  // M2 REV Channel
 
+  pinMode(L_ENC_A, INPUT);
+  pinMode(L_ENC_B, INPUT);
+  pinMode(R_ENC_A, INPUT);
+  pinMode(R_ENC_B, INPUT);
+
   nh_ = nh;
 
   currentTwist.linear.x = 0;
@@ -32,11 +44,27 @@ OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
   currentTwist.angular.y = 0;
   currentTwist.angular.z = 0;
 
+  l_enc_ticks = 0;
+  r_enc_ticks = 0;
+
   g_TwistListener = nh_.subscribe("/cmd_vel", 3, &OrigamiBot::twistCB, this);
+  g_LWheelPublisher = nh_.advertise<std_msgs::Int16>("/lwheel", 100);
+  g_RWheelPublisher = nh_.advertise<std_msgs::Int16>("/rwheel", 100);
 }
 
 OrigamiBot::~OrigamiBot()
 {
+}
+
+void publishTicks()
+{
+  //if(digitalRead(L_ENC_A) != )
+}
+
+void resetEncoders()
+{
+  l_enc_ticks = 0;
+  r_enc_ticks = 0;
 }
 
 // Maybe unneccessary helper function.  Schedule for deletion.
@@ -101,5 +129,9 @@ int main(int argc, char** argv)
   ros::NodeHandle nh;
 
   OrigamiBot bot(nh);
-  ros::spin();
+  while (ros::ok())
+  {
+    bot.updateOdom();
+    ros::spinOnce();
+  }
 }

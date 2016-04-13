@@ -27,9 +27,20 @@ public:
   static const int R_FWD = 3;
   static const int R_REV = 4;
 
+  static const int L_ENC_A = 25;
+  static const int L_ENC_B = 29;
+
+  static const int R_ENC_A = 28;
+  static const int R_ENC_B = 27;
+
+  void publishTicks();
+  void resetEncoders();
 private:
   ros::NodeHandle nh_;
   geometry_msgs::Twist currentTwist;
+
+  uint l_enc_ticks;
+  uint r_enc_ticks;
 
   bool compareTwists(geometry_msgs::Twist &t1, geometry_msgs::Twist &t2);
   void twistCB(const geometry_msgs::Twist &twist);

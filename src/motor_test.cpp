@@ -21,23 +21,27 @@ int main(int argc, char** argv)
 
   softPwmCreate(1, 0, 100);
 
+  pinMode(25, INPUT);
+  pinMode(29, INPUT);
+  pinMode(28, INPUT);
+  pinMode(27, INPUT);
 
   uint t = 0;
   double val = 0;
   while (ros::ok())
   {
-    for (int i = 0; i < 100; ++i)
-    {
-      softPwmWrite(1, i);
-      delay(10);
-    }
+    // for (int i = 0; i < 100; ++i)
+    // {
+    //   softPwmWrite(1, i);
+    //   delay(10);
+    // }
 
-    for (int i = 100; i > 0; --i)
-    {
-      softPwmWrite(1, i);
-      delay(10);
-    }
-
+    // for (int i = 100; i > 0; --i)
+    // {
+    //   softPwmWrite(1, i);
+    //   delay(10);
+    // }
+    std::cout << "LA: " << digitalRead(25) << " LB: " << digitalRead(29) << " RA: " << digitalRead(28) << " RB: " << digitalRead(27) << std::endl;
 
   ros::spinOnce();
     t++;
