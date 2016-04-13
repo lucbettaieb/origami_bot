@@ -15,14 +15,16 @@ ros::Publisher g_LWheelPublisher;
 ros::Publisher g_RWheelPublisher;
 
 int prev_l_enc_a = 0;
-int prev_l_enc_b = 1;
+int prev_l_enc_b = 0;
 
 int prev_r_enc_a = 0;
-int prev_r_enc_b = 1;
+int prev_r_enc_b = 0;
 
+int n_l_enc = 0;
+int n_r_enc = 0;
 
-uint l_enc_ticks;
-uint r_enc_ticks;
+std_msgs::Int16 l_enc_ticks;
+std_msgs::Int16 r_enc_ticks;
 
 OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
 {
@@ -48,8 +50,8 @@ OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
   currentTwist.angular.y = 0;
   currentTwist.angular.z = 0;
 
-  l_enc_ticks = 0;
-  r_enc_ticks = 0;
+  l_enc_ticks.data = 0;
+  r_enc_ticks.data = 0;
 
   g_TwistListener = nh_.subscribe("/cmd_vel", 3, &OrigamiBot::twistCB, this);
   g_LWheelPublisher = nh_.advertise<std_msgs::Int16>("/lwheel", 100);
@@ -62,7 +64,40 @@ OrigamiBot::~OrigamiBot()
 
 void OrigamiBot::publishTicks()
 {
-  //if(digitalRead(L_ENC_A) != )
+  int l_enc_a = digitalRead(L_ENC_A);
+  int l_enc_b = digitalRead(L_ENC_B);
+  if (digitalRead(L_ENC_A) != prev_l_enc_a || digitalRead(L_ENC_B) != prev_l_enc_b)
+  {
+    prev_l_enc_a = l_enc_a;
+    prev_l_enc_b = l_enc_b;
+
+    n_l_enc++;
+  }
+  if (n_l_enc >= 4)
+  {
+    n_l_enc = 0;
+
+    l_enc_ticks.data = r_enc_ticks.data + 1;
+  }
+
+  int r_enc_a = digitalRead(R_ENC_A);
+  int r_enc_b = digitalRead(R_ENC_B);
+  if (digitalRead(R_ENC_A) != prev_r_enc_a || digitalRead(R_ENC_B) != prev_r_enc_b)
+  {
+    prev_r_enc_a = r_enc_a;
+    prev_r_enc_b = r_enc_b;
+
+    n_r_enc++;
+  }
+  if (n_r_enc >= 4)
+  {
+    n_r_enc = 0;
+
+    r_enc_ticks.data = r_enc_ticks.data + 1;
+  }
+
+  g_LWheelPublisher.publish(l_enc_ticks);
+  g_RWheelPublisher.publish(r_enc_ticks);
 }
 
 void OrigamiBot::resetEncoders()
