@@ -23,8 +23,8 @@ int prev_r_enc_b = 0;
 int n_l_enc = 0;
 int n_r_enc = 0;
 
-std_msgs::Int16 l_enc_ticks;
-std_msgs::Int16 r_enc_ticks;
+std_msgs::UInt64 l_enc_ticks;
+std_msgs::UInt64 r_enc_ticks;
 
 OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
 {
@@ -54,8 +54,8 @@ OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
   r_enc_ticks.data = 0;
 
   g_TwistListener = nh_.subscribe("/cmd_vel", 3, &OrigamiBot::twistCB, this);
-  g_LWheelPublisher = nh_.advertise<std_msgs::Int16>("/lwheel", 100);
-  g_RWheelPublisher = nh_.advertise<std_msgs::Int16>("/rwheel", 100);
+  g_LWheelPublisher = nh_.advertise<std_msgs::UInt64>("/lwheel", 100);
+  g_RWheelPublisher = nh_.advertise<std_msgs::UInt64>("/rwheel", 100);
 }
 
 OrigamiBot::~OrigamiBot()

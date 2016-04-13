@@ -1,6 +1,3 @@
 <launch>
   <node pkg="origami_bot" type="origami_main" name="origami_main" />
-  <node pkg="differential_drive" type="diff_tf.py" name="diff_tf">
-    <rosparam command="load" file="$(find origami_bot)/config/settings.yaml" />
-  </node>
 </launch>

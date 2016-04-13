@@ -15,7 +15,7 @@
 #include "softPwm.h"
 
 #include <geometry_msgs/Twist.h>
-#include <std_msgs/Int16.h>
+#include <std_msgs/UInt64.h>
 
 class OrigamiBot
 {
