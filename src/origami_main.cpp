@@ -20,6 +20,10 @@ int prev_l_enc_b = 1;
 int prev_r_enc_a = 0;
 int prev_r_enc_b = 1;
 
+
+uint l_enc_ticks;
+uint r_enc_ticks;
+
 OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
 {
   wiringPiSetup();
