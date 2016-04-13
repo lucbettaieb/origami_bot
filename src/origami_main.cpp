@@ -60,12 +60,12 @@ OrigamiBot::~OrigamiBot()
 {
 }
 
-void publishTicks()
+void OrigamiBot::publishTicks()
 {
   //if(digitalRead(L_ENC_A) != )
 }
 
-void resetEncoders()
+void OrigamiBot::resetEncoders()
 {
   l_enc_ticks = 0;
   r_enc_ticks = 0;
