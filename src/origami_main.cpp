@@ -131,7 +131,7 @@ int main(int argc, char** argv)
   OrigamiBot bot(nh);
   while (ros::ok())
   {
-    bot.updateOdom();
+    bot.publishTicks();
     ros::spinOnce();
   }
 }

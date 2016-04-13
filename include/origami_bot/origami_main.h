@@ -15,6 +15,7 @@
 #include "softPwm.h"
 
 #include <geometry_msgs/Twist.h>
+#include <std_msgs/Int16.h>
 
 class OrigamiBot
 {
@@ -33,14 +34,14 @@ public:
   static const int R_ENC_A = 28;
   static const int R_ENC_B = 27;
 
+  uint l_enc_ticks;
+  uint r_enc_ticks;
+
   void publishTicks();
   void resetEncoders();
 private:
   ros::NodeHandle nh_;
   geometry_msgs::Twist currentTwist;
-
-  uint l_enc_ticks;
-  uint r_enc_ticks;
 
   bool compareTwists(geometry_msgs::Twist &t1, geometry_msgs::Twist &t2);
   void twistCB(const geometry_msgs::Twist &twist);
