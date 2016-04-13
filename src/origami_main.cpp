@@ -102,8 +102,8 @@ void OrigamiBot::publishTicks()
 
 void OrigamiBot::resetEncoders()
 {
-  l_enc_ticks = 0;
-  r_enc_ticks = 0;
+  l_enc_ticks.data = 0;
+  r_enc_ticks.data = 0;
 }
 
 // Maybe unneccessary helper function.  Schedule for deletion.
