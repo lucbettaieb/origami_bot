@@ -10,16 +10,20 @@
 
 #include <math.h>
 
-ros::Subscriber g_TwistListener;
 ros::Publisher g_LWheelPublisher;
 ros::Publisher g_RWheelPublisher;
 
+ros::Subscriber g_TwistSubscriber;
+ros::Subscriber g_WheelSubscriber;
+
+// Keep track of prev encoder pattern
 int prev_l_enc_a = 0;
 int prev_l_enc_b = 0;
 
 int prev_r_enc_a = 0;
 int prev_r_enc_b = 0;
 
+// Encoder variable
 int n_l_enc = 0;
 int n_r_enc = 0;
 
@@ -56,7 +60,9 @@ OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
   l_enc_ticks.data = 0;
   r_enc_ticks.data = 0;
 
-  g_TwistListener = nh_.subscribe("/cmd_vel", 3, &OrigamiBot::twistCB, this);
+  g_TwistSubscriber = nh_.subscribe("/cmd_vel", 3, &OrigamiBot::twistCB, this);
+  g_WheelSubscriber = nh_.subscribe("/xform_cmd", 1, &OrigamiBot::transformWheels, this)
+
   g_LWheelPublisher = nh_.advertise<std_msgs::UInt64>("/lwheel", 100);
   g_RWheelPublisher = nh_.advertise<std_msgs::UInt64>("/rwheel", 100);
 }
@@ -65,6 +71,17 @@ OrigamiBot::~OrigamiBot()
 {
 }
 
+void OrigamiBot::transformWheels(const std_msgs::UInt64& cmd)
+{
+  if (cmd.data == 1)
+  {
+    openWheels();
+  }
+  else if (cmd.data == 2)
+  {
+    closeWheels();
+  }
+}
 void OrigamiBot::openWheels()
 {
   digitalWrite(WHEEL_OPEN, HIGH);

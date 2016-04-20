@@ -34,15 +34,12 @@ public:
   static const int R_ENC_A = 28;
   static const int R_ENC_B = 27;
 
-  // These will need to be configured.
+  // These will need to be configured in export_pins.sh, too!!
   static const int WHEEL_OPEN = 13;
   static const int WHEEL_CLOSE = 14;
 
   void publishTicks();
   void resetEncoders();
-
-  void openWheels();
-  void closeWheels();
 private:
   ros::NodeHandle nh_;
   geometry_msgs::Twist currentTwist;
@@ -50,7 +47,21 @@ private:
   bool compareTwists(geometry_msgs::Twist &t1, geometry_msgs::Twist &t2);
   void twistCB(const geometry_msgs::Twist &twist);
 
+  void openWheels();
+  void closeWheels();
+
+  /*
+  * @param cmd 1 to open, 2 to close
+  */
+  void transformWheels(std_msgs::UInt64 &cmd);
+
   void sendMotorCommands();
 };
+
+// Cat here.
+//  \    /\
+//   )  ( ')
+//  (  /  )
+//   \(__)|
 
 #endif  // ORIGAMI_MAIN_H
