@@ -10,6 +10,7 @@
 #include <nav_msgs/Odometry.h>
 #include <std_msgs/UInt64.h>
 #include <std_msgs/Bool.h>
+#include <math.h>
 
 double G_TICKS_METER;
 double G_BASE_WIDTH;
