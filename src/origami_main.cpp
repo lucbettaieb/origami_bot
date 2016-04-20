@@ -41,6 +41,9 @@ OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
   pinMode(R_ENC_A, INPUT);
   pinMode(R_ENC_B, INPUT);
 
+  pinMode(WHEEL_OPEN, OUTPUT);
+  pinMode(WHEEL_CLOSE, OUTPUT);
+
   nh_ = nh;
 
   currentTwist.linear.x = 0;
@@ -60,6 +63,18 @@ OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
 
 OrigamiBot::~OrigamiBot()
 {
+}
+
+void OrigamiBot::openWheels()
+{
+  digitalWrite(WHEEL_OPEN, HIGH);
+  digitalWrite(WHEEL_CLOSE, LOW);
+}
+
+void OrigamiBot::closeWheels()
+{
+  digitalWrite(WHEEL_CLOSE, HIGH);
+  digitalWrite(WHEEL_OPEN, LOW);
 }
 
 void OrigamiBot::publishTicks()

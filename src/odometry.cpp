@@ -9,6 +9,7 @@
 #include <ros/ros.h>
 #include <nav_msgs/Odometry.h>
 #include <std_msgs/UInt64.h>
+#include <std_msgs/Bool.h>
 
 double G_TICKS_METER;
 double G_BASE_WIDTH;
@@ -35,6 +36,15 @@ void updateRightTicks(const std_msgs::UInt64& right)
 void updateLeftTicks(const std_msgs::UInt64& left)
 {
   left_ticks = left.data;
+}
+
+void updateLeftTicks(const std_msgs::Bool& reset)
+{
+  if (reset.data == true)
+  {
+    left_ticks = 0;
+    right_ticks = 0;
+  }
 }
 
 void updateOdom()
@@ -80,8 +90,9 @@ int main(int argc, char** argv)
 
   ros::Subscriber l_wheel_sub = nh.subscribe("/rwheel", 3, &updateRightTicks);
   ros::Subscriber r_wheel_sub = nh.subscribe("/lwheel", 3, &updateLeftTicks);
+  ros::Subsrriber reset_odom = nh.subscribe("/reset_odom", 1, &resetOdom)
 
-  ros::Publisher odom_pub = nh.advertise("/odom", 10);
+  ros::Publisher odom_pub = nh.advertise<nav_msgs::Odometry>("/odom", 10);
   odom.header.seq = 1;
   odom.header.stamp = ros::Time::now();
   odom.header.frame_id = "base";  // This may need to change?

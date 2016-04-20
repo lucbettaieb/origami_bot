@@ -34,8 +34,15 @@ public:
   static const int R_ENC_A = 28;
   static const int R_ENC_B = 27;
 
+  // These will need to be configured.
+  static const int WHEEL_OPEN = 13;
+  static const int WHEEL_CLOSE = 14;
+
   void publishTicks();
   void resetEncoders();
+
+  void openWheels();
+  void closeWheels();
 private:
   ros::NodeHandle nh_;
   geometry_msgs::Twist currentTwist;
