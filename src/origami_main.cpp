@@ -7,7 +7,7 @@
  */
 
 #include "origami_bot/origami_main.h"
-
+#include <sensor_msgs/Joy.h>
 #include <math.h>
 
 ros::Publisher g_LWheelPublisher;
@@ -61,7 +61,7 @@ OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
   r_enc_ticks.data = 0;
 
   g_TwistSubscriber = nh_.subscribe("/cmd_vel", 3, &OrigamiBot::twistCB, this);
-  g_WheelSubscriber = nh_.subscribe("/xform_cmd", 1, &OrigamiBot::transformWheels, this);
+  g_WheelSubscriber = nh_.subscribe("/joy", 1, &OrigamiBot::transformWheels, this);
 
   g_LWheelPublisher = nh_.advertise<std_msgs::UInt64>("/lwheel", 100);
   g_RWheelPublisher = nh_.advertise<std_msgs::UInt64>("/rwheel", 100);
@@ -71,17 +71,11 @@ OrigamiBot::~OrigamiBot()
 {
 }
 
-void OrigamiBot::transformWheels(const std_msgs::UInt64& cmd)
+void OrigamiBot::transformWheels(const sensor_msgs::Joy& cmd)
 {
-  if (cmd.data == 1)
+  if (cmd.data.buttons[1] == 1)
   {
-    ROS_INFO("HEY HO OPENING THE WHEELZ");
     openWheels();
-  }
-  else if (cmd.data == 2)
-  {
-    ROS_INFO("HEY HO CLOSING THE WHEELZ");
-    closeWheels();
   }
 }
 void OrigamiBot::openWheels()

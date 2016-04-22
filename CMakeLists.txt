@@ -5,6 +5,7 @@ FIND_LIBRARY(WIRINGPI_LIBRARY wiringPi /home/ubuntu/488_ws/src/libraries/wiringP
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  sensor_msgs
 )
 
 ## System dependencies are found with CMake's conventions
