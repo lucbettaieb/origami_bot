@@ -16,6 +16,7 @@
 
 #include <geometry_msgs/Twist.h>
 #include <std_msgs/UInt64.h>
+ #include <sensor_msgs/Joy.h>
 
 class OrigamiBot
 {

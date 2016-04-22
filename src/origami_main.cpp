@@ -7,7 +7,7 @@
  */
 
 #include "origami_bot/origami_main.h"
-#include <sensor_msgs/Joy.h>
+
 #include <math.h>
 
 ros::Publisher g_LWheelPublisher;
