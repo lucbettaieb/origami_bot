@@ -88,12 +88,14 @@ void OrigamiBot::openWheels()
 {
   digitalWrite(WHEEL_PIN, HIGH);
   delay(1000);
+  digitalWrite(WHEEL_PIN, LOW);
 }
 
 void OrigamiBot::closeWheels()
 {
   digitalWrite(WHEEL_PIN, HIGH);
   delay(1000);
+  digitalWrite(WHEEL_PIN, LOW);
 }
 
 void OrigamiBot::publishTicks()
