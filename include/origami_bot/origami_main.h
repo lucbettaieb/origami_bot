@@ -35,8 +35,7 @@ public:
   static const int R_ENC_B = 27;
 
   // These will need to be configured in export_pins.sh, too!!
-  static const int WHEEL_OPEN = 13;
-  static const int WHEEL_CLOSE = 14;
+  static const int WHEEL_PIN = 8;
 
   void publishTicks();
   void resetEncoders();

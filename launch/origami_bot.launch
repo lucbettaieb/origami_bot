@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="origami_bot" type="origami_main" name="origami_main">
+  <node pkg="origami_bot" type="origami_main" name="origami_main" output="screen">
   	<rosparam command="load" file="$(find origami_bot)/config/settings.yaml" />
   </node>
 </launch>

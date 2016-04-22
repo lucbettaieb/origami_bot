@@ -45,8 +45,8 @@ OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
   pinMode(R_ENC_A, INPUT);
   pinMode(R_ENC_B, INPUT);
 
-  pinMode(WHEEL_OPEN, OUTPUT);
-  pinMode(WHEEL_CLOSE, OUTPUT);
+  pinMode(WHEEL_PIN, OUTPUT);
+  // pinMode(WHEEL_CLOSE, OUTPUT);
 
   nh_ = nh;
 
@@ -75,23 +75,25 @@ void OrigamiBot::transformWheels(const std_msgs::UInt64& cmd)
 {
   if (cmd.data == 1)
   {
+    ROS_INFO("HEY HO OPENING THE WHEELZ");
     openWheels();
   }
   else if (cmd.data == 2)
   {
+    ROS_INFO("HEY HO CLOSING THE WHEELZ");
     closeWheels();
   }
 }
 void OrigamiBot::openWheels()
 {
-  digitalWrite(WHEEL_OPEN, HIGH);
-  digitalWrite(WHEEL_CLOSE, LOW);
+  digitalWrite(WHEEL_PIN, HIGH);
+  delay(1000);
 }
 
 void OrigamiBot::closeWheels()
 {
-  digitalWrite(WHEEL_CLOSE, HIGH);
-  digitalWrite(WHEEL_OPEN, LOW);
+  digitalWrite(WHEEL_PIN, HIGH);
+  delay(1000);
 }
 
 void OrigamiBot::publishTicks()
@@ -173,7 +175,6 @@ void OrigamiBot::twistCB(const geometry_msgs::Twist& twist)
 
     softPwmWrite(L_FWD, 100 * cmd_left);
     softPwmWrite(R_FWD, 100 * cmd_right);
-    std::cout << "FWD | L: " << cmd_left << " R: " << cmd_right << std::endl;
   }
   else if (x < 0)  // Reverse motors
   {
@@ -182,7 +183,6 @@ void OrigamiBot::twistCB(const geometry_msgs::Twist& twist)
 
     softPwmWrite(L_REV, 100 * cmd_left);
     softPwmWrite(R_REV, 100 * cmd_right);
-    std::cout << "REV | L: " << cmd_left << " R: " << cmd_right << std::endl;
   }
   else if (x == 0)  // Stop!
   {
