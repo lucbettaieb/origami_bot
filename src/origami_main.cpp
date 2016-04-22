@@ -73,7 +73,7 @@ OrigamiBot::~OrigamiBot()
 
 void OrigamiBot::transformWheels(const sensor_msgs::Joy& cmd)
 {
-  if (cmd.data.buttons[1] == 1)
+  if (cmd.buttons[1] == 1)
   {
     openWheels();
   }
