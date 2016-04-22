@@ -2,4 +2,6 @@
   <node pkg="origami_bot" type="origami_main" name="origami_main" output="screen">
   	<rosparam command="load" file="$(find origami_bot)/config/settings.yaml" />
   </node>
+  <node pkg="joy" type="joy_node" name="joy_node"/>
+  <node pkg="teleop_twist_joy" type="teleop_node" name="teleop_node"/>
 </launch>

@@ -3,3 +3,6 @@
 rate: 50
 ticks_meter: 50 # ticks per meter (to determine with wheels on)
 base_width: 0.14 
+
+joy_node/dev: /dev/input/js0
+scale_linear: 1.0
