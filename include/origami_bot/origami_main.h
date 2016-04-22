@@ -53,7 +53,7 @@ private:
   /*
   * @param cmd 1 to open, 2 to close
   */
-  void transformWheels(std_msgs::UInt64 &cmd);
+  void transformWheels(const std_msgs::UInt64& cmd)
 
   void sendMotorCommands();
 };

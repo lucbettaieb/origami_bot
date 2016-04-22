@@ -61,7 +61,7 @@ OrigamiBot::OrigamiBot(ros::NodeHandle &nh)
   r_enc_ticks.data = 0;
 
   g_TwistSubscriber = nh_.subscribe("/cmd_vel", 3, &OrigamiBot::twistCB, this);
-  g_WheelSubscriber = nh_.subscribe("/xform_cmd", 1, &OrigamiBot::transformWheels, this)
+  g_WheelSubscriber = nh_.subscribe("/xform_cmd", 1, &OrigamiBot::transformWheels, this);
 
   g_LWheelPublisher = nh_.advertise<std_msgs::UInt64>("/lwheel", 100);
   g_RWheelPublisher = nh_.advertise<std_msgs::UInt64>("/rwheel", 100);
