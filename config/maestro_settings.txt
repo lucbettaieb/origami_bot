@@ -1,0 +1,86 @@
+<!--Pololu Maestro servo controller settings file, http://www.pololu.com/catalog/product/1350-->
+<UscSettings version="1">
+  <NeverSuspend>false</NeverSuspend>
+  <SerialMode>UART_FIXED_BAUD_RATE</SerialMode>
+  <FixedBaudRate>9600</FixedBaudRate>
+  <SerialTimeout>0</SerialTimeout>
+  <EnableCrc>false</EnableCrc>
+  <SerialDeviceNumber>12</SerialDeviceNumber>
+  <SerialMiniSscOffset>0</SerialMiniSscOffset>
+  <Channels ServosAvailable="6" ServoPeriod="156">
+    <!--Period = 19.968000000000000000000000000 ms-->
+    <!--Channel 0-->
+    <Channel name="left_wheel_a" mode="Servo" min="3200" max="9280" homemode="Off" home="3200" speed="0" acceleration="0" neutral="6000" range="1905" />
+    <!--Channel 1-->
+    <Channel name="left_wheel_b" mode="Servo" min="3200" max="9280" homemode="Off" home="3200" speed="0" acceleration="0" neutral="6000" range="1905" />
+    <!--Channel 2-->
+    <Channel name="right_wheel_a" mode="Servo" min="3200" max="9280" homemode="Off" home="3200" speed="0" acceleration="0" neutral="6000" range="1905" />
+    <!--Channel 3-->
+    <Channel name="right_wheel_b" mode="Servo" min="3200" max="9280" homemode="Off" home="3200" speed="0" acceleration="0" neutral="6000" range="1905" />
+    <!--Channel 4-->
+    <Channel name="open_wheels" mode="Input" min="0" max="1024" homemode="Ignore" home="0" speed="0" acceleration="0" neutral="1024" range="1905" />
+    <!--Channel 5-->
+    <Channel name="close_wheels" mode="Input" min="0" max="1024" homemode="Ignore" home="0" speed="0" acceleration="0" neutral="1024" range="1905" />
+  </Channels>
+  <Sequences>
+    <Sequence name="close">
+      <Frame name="Frame 0" duration="500">9280 9280 9280 9280 2 0</Frame>
+      <Frame name="Frame 1" duration="500">7760 7760 7760 7760 1 0</Frame>
+      <Frame name="Frame 2" duration="500">6240 6240 6240 6240 0 0</Frame>
+      <Frame name="Frame 3" duration="500">4720 4720 4720 4720 0 3</Frame>
+      <Frame name="Frame 4" duration="500">3200 3200 3200 3200 3 1</Frame>
+    </Sequence>
+    <Sequence name="open">
+      <Frame name="Frame 0" duration="500">3200 3200 3200 3200 0 0</Frame>
+      <Frame name="Frame 1" duration="500">4720 4720 4720 4720 1 1</Frame>
+      <Frame name="Frame 2" duration="500">6240 6240 6240 6240 2 1</Frame>
+      <Frame name="Frame 3" duration="500">7760 7760 7760 7760 4 4</Frame>
+      <Frame name="Frame 4" duration="500">9280 9280 9280 9280 0 0</Frame>
+    </Sequence>
+  </Sequences>
+  <Script ScriptDone="false">0
+
+begin
+	4 get_position
+	150 greater_than
+	if 
+		1 less_than
+		if
+			2
+			open_wheels
+		else
+			0
+			close_wheels
+		endif
+		
+	endif
+repeat
+ 
+sub frame
+  100 times
+  dup 
+  dup
+  dup
+  1 delay
+  0 servo
+  500 delay
+  1 servo
+  500 delay
+  2 servo
+  500 delay
+  3 servo
+  500 delay
+  return
+
+sub open_wheels
+  
+  80 70 60 50 40 30
+  frame frame frame frame frame frame
+return	
+
+sub close_wheels
+  40 50 60 70 80 90
+  frame frame frame frame frame frame
+return
+</Script>
+</UscSettings>
