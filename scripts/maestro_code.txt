@@ -1,0 +1,44 @@
+0
+
+begin
+	4 get_position
+	150 greater_than
+	if 
+		1 less_than
+		if
+			2
+			open_wheels
+		else
+			0
+			close_wheels
+		endif
+		
+	endif
+repeat
+ 
+sub frame
+  100 times
+  dup 
+  dup
+  dup
+  1 delay
+  0 servo
+  500 delay
+  1 servo
+  500 delay
+  2 servo
+  500 delay
+  3 servo
+  500 delay
+  return
+
+sub open_wheels
+  
+  80 70 60 50 40 30
+  frame frame frame frame frame frame
+return	
+
+sub close_wheels
+  40 50 60 70 80 90
+  frame frame frame frame frame frame
+return
